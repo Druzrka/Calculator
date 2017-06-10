@@ -19,9 +19,13 @@ class ViewController: UIViewController {
         
         switch operation {
         case divideButton:
-            label.text = String(previousNumber / numberOnScreen)
-            break
-            
+            if numberOnScreen != 0 {
+                label.text = String(previousNumber / numberOnScreen)
+                break
+            } else {
+                
+                label.text = "err"
+            }
         case multiplyButton:
             label.text = String(previousNumber * numberOnScreen)
             break
@@ -98,8 +102,10 @@ class ViewController: UIViewController {
             performingMath = false
             
         } else {
-            label.text = label.text! + String(sender.tag)
-            numberOnScreen = Double(label.text!)!
+            if label.text != "err" {
+                label.text = label.text! + String(sender.tag)
+                numberOnScreen = Double(label.text!)!
+            }
         }
         
         if (label.text?.characters.count)! > maxQuantityOfDigitsInLabel {
@@ -130,12 +136,14 @@ class ViewController: UIViewController {
                 break
             
             case equallyButton:
-            applyOperation(operation: operation)
-            break
+                applyOperation(operation: operation)
+                break
             
             default:
-                getOperation(tag: sender.tag)
-                break
+                if label.text != "err" {
+                    getOperation(tag: sender.tag)
+                    break
+                }
             }
         
             if label.text?.characters.last == "0" {
@@ -144,17 +152,4 @@ class ViewController: UIViewController {
             }
         }
     }
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
 }
